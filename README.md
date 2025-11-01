@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📘 AI-Powered PDF Summarizer App
 
-## Getting Started
+An intelligent, production-ready web application that transforms PDFs into clear, concise, and interactive summaries — powered by **Next.js 15**, **React 19**, **LangChain**, and **GPT-4**.  
+Secure, fast, and beautifully designed for both desktop and mobile.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Application Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🧩 Core Functionality
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 📝 **Clear, structured summaries** — automatically extract key points and insights.
+- 🎨 **Interactive summary viewer** — includes progress tracking and clean UI.
+- 🔒 **Secure file handling** — safe upload and processing of user PDFs.
+- 🔐 **Protected routes & APIs** — user-specific access and endpoint security.
+- 💰 **Flexible pricing plans** — choose between **Basic** and **Pro** tiers.
+- 🪝 **Stripe Webhooks** — real-time handling of subscription events.
+- 📊 **User Dashboard** — manage uploaded summaries and subscription data.
+- 📱 **Responsive design** — optimized for both mobile and desktop.
+- 🔄 **Real-time updates** — automatic revalidation and data synchronization.
+- 🚀 **Production-ready** — deploy effortlessly on **Vercel**.
+- 🔔 **Toast notifications** — get live feedback on uploads, processing, and errors.
+- 📈 **Performance optimized** — fast rendering and minimal load times.
+- 🔍 **SEO-friendly summaries** — enhance discoverability with metadata and structure.
+- 🗂️ **Markdown Export** — easily convert summaries into blog posts.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### ⚙️ Core Technologies
 
-To learn more about Next.js, take a look at the following resources:
+- 🚀 **Next.js 15 App Router** — server-side rendering, API endpoints, and Server Components.
+- ⚛️ **React 19** — modern UI development with reusable components.
+- 🔑 **Clerk Authentication** — secure sign-in with **Passkeys**, **GitHub**, and **Google**.
+- 🤖 **GPT-4 Summarization** — contextual understanding and emoji-enhanced summaries.
+- 🧠 **LangChain** — powerful PDF parsing, text extraction, and document chunking.
+- 🎨 **ShadCN UI** — accessible, customizable React components for a polished look.
+- 💾 **NeonDB (PostgreSQL)** — scalable, serverless database for summaries and users.
+- 📤 **UploadThing** — secure PDF uploads (up to 32MB) with file management.
+- 💳 **Stripe Integration** — full subscription management with cancellation flow and secure payments.
+- 🔔 **Toast Notifications** — dynamic user feedback and status updates.
+- 📜 **TypeScript** — strong typing for maintainable and error-free code.
+- 💅 **TailwindCSS 4** — modern, utility-first styling with Tailwind v4 upgrade tips.
+- 🚀 **Vercel Deployment** — seamless CI/CD and instant global scalability.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
