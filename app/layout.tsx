@@ -5,6 +5,7 @@ import { Header } from "@/components/common/header";
 import { Footer } from "@/components/common/footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
+import { ORIGIN_URL } from "@/utils/helper";
 
 const fontSans = FontSans({
   variable: "--font-sans",
@@ -16,6 +17,9 @@ export const metadata: Metadata = {
   title: "Sumora - AI Powered PDF Summarizer",
   description:
     "Save hours of reading time. Transform lengthy PDFs into clear, accurate summaries in seconds with our AI-powered tool.",
+  alternates: {
+    canonical: ORIGIN_URL,
+  },
 };
 
 export default function RootLayout({

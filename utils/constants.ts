@@ -19,10 +19,7 @@ export const pricingPlans: PriceType[] = [
       "Email support",
     ],
     description: "Ideal for personal use",
-    priceId:
-      process.env.NODE_ENV === "development"
-        ? process.env.RAZORPAY_PLAN_ID_BASIC
-        : "",
+    priceId: process.env.RAZORPAY_PLAN_ID_BASIC,
   },
   {
     id: "pro",
@@ -35,10 +32,7 @@ export const pricingPlans: PriceType[] = [
       "Markdown export",
     ],
     description: "Perfect for professionals and businesses",
-    priceId:
-      process.env.NODE_ENV === "development"
-        ? process.env.RAZORPAY_PLAN_ID_PRO
-        : "",
+    priceId: process.env.RAZORPAY_PLAN_ID_PRO,
   },
 ];
 export const containerVariants = {
