@@ -29,14 +29,14 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) await auth.protect();
+  if (isProtectedRoute(req)) {
+    await auth.protect();
+  }
 });
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!.+\\.[\\w]+$|_next).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
+    // Protect all routes except static files, Next internals, and webhooks
+    "/((?!.+\\.[\\w]+$|_next|api/webhooks).*)",
   ],
 };

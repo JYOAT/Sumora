@@ -8,6 +8,7 @@ export interface RazorpaySubscriptionPayload {
     | "subscription.activated"
     | "invoice.paid"
     | "subscription.charged"
+    | "subscription.updated"
     | "subscription.cancelled";
   payload: {
     subscription?: {
@@ -45,7 +46,8 @@ export async function handleRazorpayWebhook(
   const eventType = payload.event;
   const sql = await getDbConnection();
 
-  console.log(`📩 Razorpay Event Received: ${eventType}`);
+  // console.log(`📩 Razorpay Event Received: ${eventType}`);
+  console.log("📦 Full Razorpay Payload:", JSON.stringify(payload, null, 2));
 
   try {
     switch (eventType) {
@@ -53,51 +55,88 @@ export async function handleRazorpayWebhook(
        * 🔹 SUBSCRIPTION ACTIVATED
        * Create user if not exists, but do not overwrite valid email/plan.
        */
-      case "subscription.activated": {
+      //   case "subscription.activated": {
+      //     const sub = payload.payload.subscription?.entity;
+      //     if (!sub) {
+      //       console.error("No subscription entity found");
+      //       return;
+      //     }
+
+      //     const priceId = sub.notes?.price_id || sub.plan_id;
+      //     const customerId = sub.customer_id;
+
+      //     // 🔍 Check if user already exists
+      //     const existingUser =
+      //       await sql`SELECT * FROM users WHERE customer_id = ${customerId}`;
+
+      //     if (existingUser.length === 0) {
+      //       // 🆕 New user
+      //       await sql`
+      //   INSERT INTO users (email, full_name, customer_id, price_id, status)
+      //   VALUES ('unknown@example.com', 'N/A', ${customerId}, ${priceId}, 'active')
+      // `;
+      //       console.log("👤 New user created:", customerId);
+      //     } else {
+      //       // 🔄 Existing user: update their plan (price_id) and status
+      //       const current = existingUser[0];
+
+      //       await sql`
+      //   UPDATE users
+      //   SET
+      //     price_id = ${priceId},
+      //     status = 'active',
+      //     updated_at = NOW()
+      //   WHERE customer_id = ${customerId}
+      // `;
+
+      //       console.log(
+      //         `🔁 Updated existing user plan from ${current.price_id} → ${priceId}`
+      //       );
+      //     }
+
+      //     console.log("✅ Subscription activated:", sub.id);
+      //     break;
+      //   }
+      case "subscription.activated":
+      case "subscription.charged": {
         const sub = payload.payload.subscription?.entity;
         if (!sub) {
-          console.error("No subscription entity found");
+          console.error("❌ No subscription entity found");
           return;
         }
 
         const priceId = sub.notes?.price_id || sub.plan_id;
         const customerId = sub.customer_id;
 
-        // Check if user already exists
         const existingUser =
           await sql`SELECT * FROM users WHERE customer_id = ${customerId}`;
 
-        if (existingUser.length === 0) {
-          await sql`
-            INSERT INTO users (email, full_name, customer_id, price_id, status)
-            VALUES ('unknown@example.com', 'N/A', ${customerId}, ${priceId}, 'active')
-          `;
-          console.log("👤 New user created:", customerId);
-        } else {
-          // Keep existing correct email & plan
+        if (existingUser.length > 0) {
           const current = existingUser[0];
-          const newEmail =
-            current.email !== "unknown@example.com"
-              ? current.email
-              : "unknown@example.com";
-          const newPrice =
-            current.price_id && current.price_id !== "subscription_plan"
-              ? current.price_id
-              : priceId;
 
+          // Only update if the plan actually changed
+          if (current.price_id !== priceId) {
+            await sql`
+        UPDATE users
+        SET price_id = ${priceId},
+            status = 'active',
+            updated_at = NOW()
+        WHERE customer_id = ${customerId}
+      `;
+            console.log(
+              `🔁 Existing user upgraded/downgraded: ${current.price_id} → ${priceId}`
+            );
+          } else {
+            console.log("ℹ️ User already on the correct plan:", priceId);
+          }
+        } else {
           await sql`
-            UPDATE users
-            SET email = ${newEmail},
-                price_id = ${newPrice},
-                status = 'active',
-                updated_at = NOW()
-            WHERE customer_id = ${customerId}
-          `;
-
-          console.log("🔄 Existing user retained valid info:", newEmail);
+      INSERT INTO users (email, full_name, customer_id, price_id, status)
+      VALUES ('unknown@example.com', 'N/A', ${customerId}, ${priceId}, 'active')
+    `;
+          console.log("👤 New user created:", customerId);
         }
 
-        console.log("✅ Subscription activated:", sub.id);
         break;
       }
 
